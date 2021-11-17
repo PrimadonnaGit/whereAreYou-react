@@ -9,21 +9,9 @@ import Header from '@layouts/Header';
 const { Text } = Typography;
 
 const Home: FC = ({ children }) => {
-  const { data, error, revalidate } = useSWR(`http://localhost:8000/api/auth/user`, fetcher, {
+  const { data, error, revalidate, mutate } = useSWR(`http://localhost:8000/api/auth/user`, fetcher, {
     dedupingInterval: 5000,
   });
-
-  const onLogout = useCallback(() => {
-    axios
-      .delete('http://localhost:8000/api/auth/logout', {
-        withCredentials: true,
-      })
-      .then(() => {
-        revalidate();
-      })
-      .catch(() => {})
-      .finally(() => {});
-  }, []);
 
   if (!data) {
     return <Redirect to="/login" />;
@@ -34,7 +22,6 @@ const Home: FC = ({ children }) => {
       <Header />
       <div>
         <Text>{data?.email}</Text>
-        <Button onClick={onLogout}>로그아웃</Button>
         {children}
       </div>
     </>

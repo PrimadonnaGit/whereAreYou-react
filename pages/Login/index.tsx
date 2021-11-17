@@ -14,7 +14,7 @@ const { Title, Text } = Typography;
 const Login = () => {
   const [form] = Form.useForm();
   const [errMessage, setErrMessage] = useState('');
-  const { data, error, revalidate } = useSWR(`http://localhost:8000/api/auth/user`, fetcher, {
+  const { data, error, revalidate, mutate } = useSWR(`http://localhost:8000/api/auth/user`, fetcher, {
     dedupingInterval: 5000,
   });
 
@@ -25,8 +25,7 @@ const Login = () => {
         withCredentials: true,
       })
       .then((response) => {
-        revalidate();
-        console.log(response);
+        mutate(response.data, false); // if true: OPTIMISTIC UI
       })
       .catch((error) => {
         setErrMessage(error.response?.data?.msg);
@@ -34,8 +33,8 @@ const Login = () => {
       .finally(() => {});
   }, []);
 
-  if (data === undefined) {
-    return <div>Loading... 안ㄴ녕 좀 ㅂ빨라졌네?</div>;
+  if (data === undefined && !error) {
+    return <div>Loading...</div>;
   }
 
   if (data) {
