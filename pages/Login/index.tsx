@@ -47,6 +47,7 @@ const Login = () => {
       <CenterLayer>
         <Body>
           <Title level={1}>로그인</Title>
+
           <Form form={form} name="form-login" onFinish={onFinish}>
             <Form.Item name="facebook-login" rules={[{ required: false }]}>
               <Button
