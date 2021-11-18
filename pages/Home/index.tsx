@@ -9,7 +9,7 @@ import Header from '@layouts/Header';
 const { Text } = Typography;
 
 const Home: FC = ({ children }) => {
-  const { data, error, revalidate, mutate } = useSWR(`http://localhost:8000/api/auth/user`, fetcher, {
+  const { data, error, revalidate, mutate } = useSWR(`http://localhost:8000/api/user`, fetcher, {
     dedupingInterval: 5000,
   });
 

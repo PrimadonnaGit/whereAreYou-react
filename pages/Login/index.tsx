@@ -14,7 +14,7 @@ const { Title, Text } = Typography;
 const Login = () => {
   const [form] = Form.useForm();
   const [errMessage, setErrMessage] = useState('');
-  const { data, error, revalidate, mutate } = useSWR(`http://localhost:8000/api/auth/user`, fetcher, {
+  const { data, error, revalidate, mutate } = useSWR(`http://localhost:8000/api/user`, fetcher, {
     dedupingInterval: 5000,
   });
 
